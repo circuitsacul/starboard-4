@@ -47,7 +47,6 @@ impl StarboardBot {
         // Setup gateway connection
         let intents = Intents::GUILDS
             | Intents::GUILD_EMOJIS_AND_STICKERS
-            | Intents::GUILD_MEMBERS
             | Intents::GUILD_MESSAGES
             | Intents::DIRECT_MESSAGES
             | Intents::MESSAGE_CONTENT
