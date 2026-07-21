@@ -2,7 +2,6 @@ use std::env;
 
 use dotenv::dotenv;
 
-#[derive(Debug)]
 pub struct Config {
     pub token: String,
     pub patreon_token: Option<String>,

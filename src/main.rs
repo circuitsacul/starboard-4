@@ -34,7 +34,6 @@ async fn main() {
     init_tracing();
 
     let config = Config::from_env();
-    println!("{config:#?}");
 
     let bot = match StarboardBot::new(config).await {
         Ok(val) => val,
