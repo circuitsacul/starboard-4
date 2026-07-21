@@ -6,6 +6,7 @@ use twilight_model::id::{
     marker::{GuildMarker, RoleMarker, UserMarker},
 };
 
+use super::premium::is_premium::is_guild_premium;
 use crate::{
     client::bot::StarboardBot,
     constants,
@@ -13,8 +14,6 @@ use crate::{
     errors::StarboardResult,
     utils::{id_as_i64::GetI64, into_id::IntoId},
 };
-
-use super::premium::is_premium::is_guild_premium;
 
 pub struct GuildPRUpdateResult {
     pub removed_roles: i32,

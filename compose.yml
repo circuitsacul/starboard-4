@@ -1,0 +1,27 @@
+name: starboard
+
+services:
+  postgres:
+    image: docker.io/postgres:18
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+    command: >
+      postgres
+      -c shared_buffers=4GB
+      -c work_mem=16MB
+      -c max_connections=500
+    volumes:
+      - ./.postgres/postgres18:/var/lib/postgresql:Z
+
+  starboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    environment:
+      SB_DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+    restart: unless-stopped
+    depends_on: [postgres]

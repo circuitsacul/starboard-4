@@ -4,14 +4,13 @@ use twilight_model::channel::message::{
 };
 use twilight_util::builder::embed::ImageSource;
 
-use crate::cache::models::message::CachedMessage;
-
 use super::{
     AttachmentHandle,
     image_only_embed::maybe_get_attachment_handle,
     imgur::{ImgurResult, modify_imgur_embed},
     youtube::modify_yt_embed,
 };
+use crate::cache::models::message::CachedMessage;
 
 pub type StickerNames = String;
 pub type PrimaryImage = ImageSource;

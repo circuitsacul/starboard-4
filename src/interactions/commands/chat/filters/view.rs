@@ -1,4 +1,5 @@
 use std::time::Duration;
+
 use thousands::Separable;
 use twilight_interactions::command::{CommandModel, CreateCommand};
 use twilight_model::channel::message::Embed;

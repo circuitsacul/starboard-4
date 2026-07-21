@@ -6,6 +6,7 @@ use tokio::{
 };
 use twilight_gateway::{EventTypeFlags, Shard, StreamExt as _, create_iterator};
 
+use super::cooldowns::Cooldowns;
 use crate::{
     client::bot::StarboardBot,
     core::{
@@ -16,8 +17,6 @@ use crate::{
     },
     events::handle_event,
 };
-
-use super::cooldowns::Cooldowns;
 
 async fn wait_for_shutdown() {
     let mut terminate = signal(SignalKind::terminate()).unwrap();

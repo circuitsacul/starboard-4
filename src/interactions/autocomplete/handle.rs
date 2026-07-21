@@ -4,14 +4,13 @@ use twilight_model::{
 };
 use twilight_util::builder::InteractionResponseDataBuilder;
 
-use crate::{errors::StarboardResult, interactions::context::CommandCtx};
-
 use super::{
     autoredeem::autoredeem_autocomplete, autostar_name::autostar_name_autocomplete,
     exclusive_group_name::exclusive_group_name_autocomplete,
     filter_group::filter_group_name_autocomplete, override_name::override_name_autocomplete,
     starboard_name::starboard_name_autocomplete,
 };
+use crate::{errors::StarboardResult, interactions::context::CommandCtx};
 
 pub fn get_sub_options(options: &Vec<CommandDataOption>) -> Option<&Vec<CommandDataOption>> {
     if options.len() != 1 {

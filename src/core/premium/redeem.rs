@@ -1,13 +1,12 @@
 use chrono::{DateTime, Days, Utc};
 
+use super::{is_premium::is_guild_premium, locks::refresh_premium_locks};
 use crate::{
     client::bot::StarboardBot,
     constants,
     database::{DbGuild, DbUser},
     errors::StarboardResult,
 };
-
-use super::{is_premium::is_guild_premium, locks::refresh_premium_locks};
 
 #[derive(PartialEq, Eq)]
 pub enum RedeemPremiumResult {

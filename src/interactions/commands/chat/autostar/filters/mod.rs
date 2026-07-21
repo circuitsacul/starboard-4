@@ -1,8 +1,9 @@
 mod add;
 mod remove;
 
-use crate::{errors::StarboardResult, interactions::context::CommandCtx};
 use twilight_interactions::command::{CommandModel, CreateCommand};
+
+use crate::{errors::StarboardResult, interactions::context::CommandCtx};
 
 #[derive(CommandModel, CreateCommand)]
 #[command(

@@ -18,6 +18,7 @@ use twilight_util::{
     snowflake::Snowflake,
 };
 
+use super::{AttachmentHandle, Embedder, parser::ParsedMessage};
 use crate::{
     cache::{MessageResult, models::message::CachedMessage},
     constants,
@@ -27,8 +28,6 @@ use crate::{
         avatar::ImageHashAvatar, id_as_i64::GetI64, into_id::IntoId, message_link::fmt_message_link,
     },
 };
-
-use super::{AttachmentHandle, Embedder, parser::ParsedMessage};
 
 lazy_static! {
     static ref URL_REGEX: Regex = Regex::new(concat!(

@@ -3,6 +3,10 @@ use std::{collections::HashMap, sync::Arc, time::Duration};
 use cached::Cached;
 use twilight_model::id::{Id, marker::MessageMarker};
 
+use super::{
+    config::StarboardConfig,
+    msg_status::{MessageStatus, get_message_status},
+};
 use crate::{
     cache::MessageResult,
     client::bot::StarboardBot,
@@ -13,11 +17,6 @@ use crate::{
     database::{DbMessage, StarboardMessage, Vote},
     errors::StarboardResult,
     utils::{id_as_i64::GetI64, into_id::IntoId},
-};
-
-use super::{
-    config::StarboardConfig,
-    msg_status::{MessageStatus, get_message_status},
 };
 
 async fn refresh_exclusive_group(

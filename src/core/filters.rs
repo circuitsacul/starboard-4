@@ -5,6 +5,7 @@ use twilight_model::id::{
     marker::{ChannelMarker, GuildMarker, MessageMarker, UserMarker},
 };
 
+use super::premium::is_premium::is_guild_premium;
 use crate::{
     cache::{MessageResult, models::member::CachedMember},
     client::bot::StarboardBot,
@@ -12,8 +13,6 @@ use crate::{
     errors::StarboardResult,
     utils::{id_as_i64::GetI64, snowflake_age::SnowflakeAge},
 };
-
-use super::premium::is_premium::is_guild_premium;
 
 fn has_all_roles(user_roles: &[i64], required: &[i64]) -> bool {
     for role in required {

@@ -1,9 +1,8 @@
+use super::config::StarboardConfig;
 use crate::{
     cache::MessageResult, client::bot::StarboardBot, database::DbMessage, errors::StarboardResult,
     utils::into_id::IntoId,
 };
-
-use super::config::StarboardConfig;
 
 #[derive(Debug)]
 pub enum MessageStatus {

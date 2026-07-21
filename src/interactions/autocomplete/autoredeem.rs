@@ -1,13 +1,12 @@
 use twilight_model::application::command::CommandOptionChoice;
 
+use super::best_matches::best_matches_as_choices;
 use crate::{
     database::DbMember,
     errors::StarboardResult,
     interactions::context::CommandCtx,
     utils::{id_as_i64::GetI64, into_id::IntoId},
 };
-
-use super::best_matches::best_matches_as_choices;
 
 pub async fn autoredeem_autocomplete(
     ctx: &CommandCtx,

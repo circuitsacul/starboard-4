@@ -11,14 +11,13 @@ use twilight_model::{
     },
 };
 
+use super::wait_for::wait_for_component;
 use crate::{
     client::bot::StarboardBot,
     errors::StarboardResult,
     interactions::context::{CommandCtx, ComponentCtx},
     utils::div_ceil::div_ceil,
 };
-
-use super::wait_for::wait_for_component;
 
 const ITEMS_PER_CHUNK: usize = 25;
 

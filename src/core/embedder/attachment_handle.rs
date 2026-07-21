@@ -6,13 +6,12 @@ use twilight_model::{
 };
 use twilight_util::builder::embed::{EmbedBuilder, ImageSource};
 
+use super::parser::AttachmentListItem;
 use crate::{
     client::bot::StarboardBot,
     constants,
     errors::{StarboardError, StarboardResult},
 };
-
-use super::parser::AttachmentListItem;
 
 pub struct AttachmentHandle {
     pub filename: String,

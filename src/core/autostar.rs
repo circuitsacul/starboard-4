@@ -5,6 +5,9 @@ use twilight_model::id::{
     marker::{ChannelMarker, GuildMarker, MessageMarker},
 };
 
+use super::{
+    filters::FilterEvaluater, has_image::has_image, premium::is_premium::is_guild_premium,
+};
 use crate::{
     cache::{MessageResult, models::message::CachedMessage},
     client::bot::StarboardBot,
@@ -14,10 +17,6 @@ use crate::{
     },
     errors::StarboardResult,
     utils::{id_as_i64::GetI64, notify},
-};
-
-use super::{
-    filters::FilterEvaluater, has_image::has_image, premium::is_premium::is_guild_premium,
 };
 
 pub async fn handle(

@@ -7,6 +7,7 @@ use twilight_model::id::{
     marker::{ChannelMarker, MessageMarker, UserMarker},
 };
 
+use super::config::StarboardConfig;
 use crate::{
     client::bot::StarboardBot,
     core::{
@@ -16,8 +17,6 @@ use crate::{
     errors::StarboardResult,
     utils::{into_id::IntoId, snowflake_age::SnowflakeAge},
 };
-
-use super::config::StarboardConfig;
 
 pub struct VoteContext<'a> {
     pub emoji: &'a SimpleEmoji,

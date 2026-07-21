@@ -14,6 +14,10 @@ use twilight_model::{
     },
 };
 
+use super::{
+    models::{guild::CachedGuild, member::CachedMember, message::CachedMessage, user::CachedUser},
+    update::UpdateCache,
+};
 use crate::{
     cache::models::channel::CachedChannel,
     client::bot::StarboardBot,
@@ -24,11 +28,6 @@ use crate::{
         async_dash::{AsyncDashMap, AsyncDashSet},
         get_status::get_status,
     },
-};
-
-use super::{
-    models::{guild::CachedGuild, member::CachedMember, message::CachedMessage, user::CachedUser},
-    update::UpdateCache,
 };
 
 macro_rules! update_cache_events {

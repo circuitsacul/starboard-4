@@ -11,13 +11,12 @@ use twilight_model::{
     },
 };
 
+use super::wait_for::wait_for_component;
 use crate::{
     client::bot::StarboardBot,
     errors::StarboardResult,
     interactions::context::{CommandCtx, ComponentCtx},
 };
-
-use super::wait_for::wait_for_component;
 
 pub fn components(danger: bool) -> Vec<Component> {
     let buttons = vec![
