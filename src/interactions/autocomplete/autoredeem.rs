@@ -35,6 +35,6 @@ pub async fn autoredeem_autocomplete(
     Ok(best_matches_as_choices(
         focused,
         &guild_names_ref,
-        Some(|n: &str| n.split(' ').last().unwrap().to_string()),
+        Some(|n: &str| n.split(' ').next_back().unwrap().to_string()),
     ))
 }

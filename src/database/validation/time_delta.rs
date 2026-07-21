@@ -83,12 +83,13 @@ pub fn validate_relative_duration(
     newer_than: Option<i64>,
     older_than: Option<i64>,
 ) -> Result<(), String> {
-    if let Some(newer_than) = newer_than {
-        if let Some(older_than) = older_than {
-            if older_than >= newer_than && older_than != 0 && newer_than != 0 {
-                return Err("`older-than` must be less than `newer-than`.".to_string());
-            }
-        }
+    if let Some(newer_than) = newer_than
+        && let Some(older_than) = older_than
+        && older_than >= newer_than
+        && older_than != 0
+        && newer_than != 0
+    {
+        return Err("`older-than` must be less than `newer-than`.".to_string());
     }
     if let Some(older_than) = older_than {
         if older_than < 0 {

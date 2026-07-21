@@ -54,18 +54,18 @@ pub async fn get_message_status(
         return Ok(MessageStatus::Update(false));
     }
 
-    if let Some(required_remove) = config.resolved.required_remove {
-        if points <= required_remove as i32 {
-            return Ok(MessageStatus::Remove);
-        }
+    if let Some(required_remove) = config.resolved.required_remove
+        && points <= required_remove as i32
+    {
+        return Ok(MessageStatus::Remove);
     }
 
-    if let Some(required) = config.resolved.required {
-        if validate_regex(config, message_obj, is_premium) {
-            #[allow(clippy::collapsible_if)]
-            if points >= required as i32 {
-                return Ok(MessageStatus::Send(config.resolved.link_edits));
-            }
+    if let Some(required) = config.resolved.required
+        && validate_regex(config, message_obj, is_premium)
+    {
+        #[allow(clippy::collapsible_if)]
+        if points >= required as i32 {
+            return Ok(MessageStatus::Send(config.resolved.link_edits));
         }
     }
 
@@ -85,19 +85,17 @@ fn validate_regex(config: &StarboardConfig, message_obj: &MessageResult, is_prem
         return false;
     };
 
-    if let Some(re) = &config.resolved.matches {
-        if let Ok(re) = regex::Regex::new(re) {
-            if !re.is_match(&message_obj.content) {
-                return false;
-            }
-        }
+    if let Some(re) = &config.resolved.matches
+        && let Ok(re) = regex::Regex::new(re)
+        && !re.is_match(&message_obj.content)
+    {
+        return false;
     }
-    if let Some(re) = &config.resolved.not_matches {
-        if let Ok(re) = regex::Regex::new(re) {
-            if re.is_match(&message_obj.content) {
-                return false;
-            }
-        }
+    if let Some(re) = &config.resolved.not_matches
+        && let Ok(re) = regex::Regex::new(re)
+        && re.is_match(&message_obj.content)
+    {
+        return false;
     }
 
     true

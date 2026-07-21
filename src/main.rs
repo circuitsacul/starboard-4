@@ -39,9 +39,9 @@ async fn main() {
     let bot = match StarboardBot::new(config).await {
         Ok(val) => val,
         Err(why) => {
-            eprintln!("{}", &why);
+            eprintln!("{}", why);
             if let Some(bt) = ErrorCompat::backtrace(&why) {
-                eprintln!("{:#?}", &bt);
+                eprintln!("{:#?}", bt);
             }
             return;
         }

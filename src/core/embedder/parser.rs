@@ -96,17 +96,17 @@ impl ParsedMessage {
 
         for embed in &orig.embeds {
             // handle imgur
-            if let Some(provider) = &embed.provider {
-                if matches!(provider.name.as_deref(), Some("Imgur")) {
-                    let ret = modify_imgur_embed(embed.clone());
+            if let Some(provider) = &embed.provider
+                && matches!(provider.name.as_deref(), Some("Imgur"))
+            {
+                let ret = modify_imgur_embed(embed.clone());
 
-                    match ret {
-                        ImgurResult::Video(attachment) => upload_attachments.push(attachment),
-                        ImgurResult::Image(embed) => embeds.push(*embed),
-                    }
-
-                    continue;
+                match ret {
+                    ImgurResult::Video(attachment) => upload_attachments.push(attachment),
+                    ImgurResult::Image(embed) => embeds.push(*embed),
                 }
+
+                continue;
             }
 
             // handle embeds that are purely attachments
@@ -154,7 +154,7 @@ impl ParsedMessage {
                 let handle = AttachmentHandle {
                     filename: format!(
                         "embed_video.{}",
-                        proxy_url.split('.').last().unwrap_or("mp4")
+                        proxy_url.split('.').next_back().unwrap_or("mp4")
                     ),
                     content_type: Some("video".to_string()),
                     url: proxy_url.clone(),
@@ -164,18 +164,18 @@ impl ParsedMessage {
             }
 
             // platform-specific modifications
-            if let Some(provider) = &embed.provider {
-                if let Some(mut name) = provider.name.as_deref() {
-                    if name.starts_with("FixTweet") {
-                        name = "FixTweet";
+            if let Some(provider) = &embed.provider
+                && let Some(mut name) = provider.name.as_deref()
+            {
+                if name.starts_with("FixTweet") {
+                    name = "FixTweet";
+                }
+                match name {
+                    "YouTube" => modify_yt_embed(&mut embed),
+                    "FixTweet" => {
+                        embed.description = None;
                     }
-                    match name {
-                        "YouTube" => modify_yt_embed(&mut embed),
-                        "FixTweet" => {
-                            embed.description = None;
-                        }
-                        _ => (),
-                    }
+                    _ => (),
                 }
             }
 
@@ -198,11 +198,11 @@ impl ParsedMessage {
                             url: format!("https://cdn.discordapp.com/stickers/{}.png", sticker.id),
                         };
 
-                        if primary_image.is_none() {
-                            if let Some(image) = handle.embedable_image() {
-                                primary_image.replace(image);
-                                continue;
-                            }
+                        if primary_image.is_none()
+                            && let Some(image) = handle.embedable_image()
+                        {
+                            primary_image.replace(image);
+                            continue;
                         }
 
                         if let Some(embed) = handle.as_embed() {

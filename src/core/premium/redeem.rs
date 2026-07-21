@@ -36,10 +36,10 @@ pub async fn redeem_premium(
     )
     .fetch_one(&mut *tx)
     .await?;
-    if let Some(assert_guild_status) = assert_guild_status {
-        if guild.premium_end != assert_guild_status {
-            return Ok(RedeemPremiumResult::StateMismatch);
-        }
+    if let Some(assert_guild_status) = assert_guild_status
+        && guild.premium_end != assert_guild_status
+    {
+        return Ok(RedeemPremiumResult::StateMismatch);
     }
 
     // get the user

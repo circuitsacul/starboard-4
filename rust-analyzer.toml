@@ -1,5 +1,5 @@
 [cargo]
-extraEnv = { "RUSTUP_TOOLCHAIN" = "nightly", "RUSTFLAGS" = "-Zthreads=16" }
+extraEnv = { "RUSTUP_TOOLCHAIN" = "nightly-2026-05-03", "RUSTFLAGS" = "-Zthreads=16" }
 
 [check]
-extraEnv = { "RUSTUP_TOOLCHAIN" = "nightly", "RUSTFLAGS" = "-Zthreads=16" }
+extraEnv = { "RUSTUP_TOOLCHAIN" = "nightly-2026-05-03", "RUSTFLAGS" = "-Zthreads=16" }

@@ -56,8 +56,8 @@ pub async fn update_supporter_roles(
     let Some(member) = bot.cache.fog_member(bot, guild_id, user_id).await? else {
         return Ok(());
     };
-    let has_supporter = supporter_role.map_or(false, |r| member.roles.contains(&r));
-    let has_patron = patron_role.map_or(false, |r| member.roles.contains(&r));
+    let has_supporter = supporter_role.is_some_and(|r| member.roles.contains(&r));
+    let has_patron = patron_role.is_some_and(|r| member.roles.contains(&r));
 
     let is_active_patron = user.patreon_status == 1;
     let is_supporter = user.patreon_status != 0 || user.donated_cents != 0 || is_active_patron;

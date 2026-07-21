@@ -17,7 +17,7 @@ pub fn get_gif_url(url: &str, provider: &str) -> Option<String> {
     match provider {
         "Tenor" => {
             let caps: Vec<_> = TENOR.captures_iter(url).collect();
-            let groups = caps.get(0)?;
+            let groups = caps.first()?;
 
             let gif_id = &groups[1];
             let gif_id = gif_id[0..gif_id.len() - 1].to_string() + "C";
@@ -27,7 +27,7 @@ pub fn get_gif_url(url: &str, provider: &str) -> Option<String> {
         "Giphy" => {
             let url = url.split('?').next().unwrap();
             let caps: Vec<_> = GIPHY.captures_iter(url).collect();
-            let groups = caps.get(0)?;
+            let groups = caps.first()?;
 
             let gif_id = &groups[1];
             let name = &groups[2];

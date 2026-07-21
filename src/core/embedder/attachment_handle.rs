@@ -63,7 +63,7 @@ impl AttachmentHandle {
         let content_type = match attachment.content_type.clone() {
             Some(ct) => Some(ct),
             None => {
-                let suffix = attachment.filename.split('.').last();
+                let suffix = attachment.filename.split('.').next_back();
                 suffix.and_then(|suffix| match suffix {
                     "png" | "jpg" | "jpeg" | "gif" | "gifv" => Some(format!("image/{suffix}")),
                     _ => None,
@@ -100,10 +100,10 @@ impl AttachmentHandle {
             return None;
         }
 
-        if let Some(ct) = &self.content_type {
-            if ct.starts_with("image") {
-                return Some(ImageSource::url(&self.url).unwrap());
-            }
+        if let Some(ct) = &self.content_type
+            && ct.starts_with("image")
+        {
+            return Some(ImageSource::url(&self.url).unwrap());
         }
 
         None

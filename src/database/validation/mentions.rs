@@ -48,7 +48,7 @@ pub fn parse_role_ids(bot: &StarboardBot, guild_id: Id<GuildMarker>, inp: &str) 
 
     for role_id in parse_numbers(inp) {
         if !bot.cache.guilds.with(&guild_id, |_, g| {
-            g.as_ref().map_or(false, |g| g.roles.contains_key(&role_id))
+            g.as_ref().is_some_and(|g| g.roles.contains_key(&role_id))
         }) {
             continue;
         }

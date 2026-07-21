@@ -35,7 +35,7 @@ async fn refresh_exclusive_group(
         refreshers.push((sort_key, ref_sb));
     }
 
-    refreshers.sort_by(|left, right| right.0.cmp(&left.0));
+    refreshers.sort_by_key(|&(k, _)| std::cmp::Reverse(k));
 
     let mut message_exists = false;
     for (_, mut ref_sb) in refreshers {

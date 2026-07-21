@@ -285,36 +285,27 @@ impl Embedder {
             MessageResult::Missing => return Ok(true),
         };
 
-        if let Some(wh_id) = self.config.starboard.webhook_id {
-            if wh_id == msg.author_id.get_i64() {
-                if let Some(wh) =
-                    get_valid_webhook(bot, &self.config.starboard, false, true).await?
-                {
-                    let parent = bot
-                        .cache
-                        .fog_parent_channel_id(
-                            bot,
-                            self.config.starboard.guild_id.into_id(),
-                            sb_channel_id,
-                        )
-                        .await?
-                        .unwrap();
+        if let Some(wh_id) = self.config.starboard.webhook_id
+            && wh_id == msg.author_id.get_i64()
+            && let Some(wh) = get_valid_webhook(bot, &self.config.starboard, false, true).await?
+        {
+            let parent = bot
+                .cache
+                .fog_parent_channel_id(bot, self.config.starboard.guild_id.into_id(), sb_channel_id)
+                .await?
+                .unwrap();
 
-                    let mut ud = bot.http.delete_webhook_message(
-                        wh.id,
-                        wh.token.as_ref().unwrap(),
-                        message_id,
-                    );
+            let mut ud =
+                bot.http
+                    .delete_webhook_message(wh.id, wh.token.as_ref().unwrap(), message_id);
 
-                    if parent != sb_channel_id || is_forum {
-                        ud = ud.thread_id(real_channel_id);
-                    }
+            if parent != sb_channel_id || is_forum {
+                ud = ud.thread_id(real_channel_id);
+            }
 
-                    let ret = ud.await;
-                    if ret.is_ok() {
-                        return Ok(true);
-                    }
-                }
+            let ret = ud.await;
+            if ret.is_ok() {
+                return Ok(true);
             }
         }
 

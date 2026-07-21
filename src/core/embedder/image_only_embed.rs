@@ -53,7 +53,7 @@ pub fn maybe_get_attachment_handle(embed: &Embed) -> Option<AttachmentHandle> {
     };
 
     let name = {
-        let name = url.split('/').last();
+        let name = url.split('/').next_back();
         match name {
             Some(name) => name.to_string(),
             None => "attachment".to_string(),

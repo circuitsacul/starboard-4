@@ -23,10 +23,10 @@ pub fn validate_required(val: String, required_remove: Option<i16>) -> Result<Op
         return Ok(None);
     };
 
-    if let Some(required_remove) = required_remove {
-        if val <= required_remove {
-            return Err("`required` must be greater than `required-remove`.".to_string());
-        }
+    if let Some(required_remove) = required_remove
+        && val <= required_remove
+    {
+        return Err("`required` must be greater than `required-remove`.".to_string());
     }
 
     if val < constants::MIN_REQUIRED {
@@ -49,10 +49,10 @@ pub fn validate_required_remove(val: String, required: Option<i16>) -> Result<Op
         return Ok(None);
     };
 
-    if let Some(required) = required {
-        if val >= required {
-            return Err("`required-remove` must be less than `required`.".to_string());
-        }
+    if let Some(required) = required
+        && val >= required
+    {
+        return Err("`required-remove` must be less than `required`.".to_string());
     }
 
     if val < constants::MIN_REQUIRED_REMOVE {

@@ -9,27 +9,27 @@ pub enum ImgurResult {
 }
 
 pub fn modify_imgur_embed(mut embed: Embed) -> ImgurResult {
-    if let Some(video) = &embed.video {
-        if let Some(proxy) = &video.proxy_url {
-            let ext = proxy.split('.').last().unwrap_or("mp4");
-            return ImgurResult::Video(AttachmentHandle {
-                filename: format!("imgur_video.{ext}"),
-                content_type: Some("video".to_string()),
-                url: proxy.to_owned(),
-            });
-        }
+    if let Some(video) = &embed.video
+        && let Some(proxy) = &video.proxy_url
+    {
+        let ext = proxy.split('.').next_back().unwrap_or("mp4");
+        return ImgurResult::Video(AttachmentHandle {
+            filename: format!("imgur_video.{ext}"),
+            content_type: Some("video".to_string()),
+            url: proxy.to_owned(),
+        });
     }
 
     let thumb = std::mem::take(&mut embed.thumbnail);
-    if let Some(thumb) = thumb {
-        if let Some(url) = modify_imgur_url(&thumb.url) {
-            embed.image = Some(EmbedImage {
-                height: None,
-                width: None,
-                proxy_url: None,
-                url,
-            });
-        }
+    if let Some(thumb) = thumb
+        && let Some(url) = modify_imgur_url(&thumb.url)
+    {
+        embed.image = Some(EmbedImage {
+            height: None,
+            width: None,
+            proxy_url: None,
+            url,
+        });
     }
 
     ImgurResult::Image(Box::new(embed))
@@ -42,7 +42,7 @@ pub fn modify_imgur_url(url: &str) -> Option<String> {
     }
 
     let caps: Vec<_> = RE.captures_iter(url).collect();
-    let groups = caps.get(0)?;
+    let groups = caps.first()?;
 
     let id = &groups[1];
     let ext = &groups[2];

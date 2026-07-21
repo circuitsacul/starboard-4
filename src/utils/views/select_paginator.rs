@@ -23,7 +23,7 @@ const ITEMS_PER_CHUNK: usize = 25;
 
 enum AnyContext {
     Initial(CommandCtx),
-    Select(CommandCtx, ComponentCtx),
+    Select(CommandCtx, Box<ComponentCtx>),
 }
 
 impl AnyContext {
@@ -106,7 +106,7 @@ impl SelectPaginator {
                 _ => unreachable!(),
             }
 
-            self.ctx = AnyContext::Select(self.ctx.into_initial_ctx(), ctx);
+            self.ctx = AnyContext::Select(self.ctx.into_initial_ctx(), Box::new(ctx));
         }
 
         Ok(())

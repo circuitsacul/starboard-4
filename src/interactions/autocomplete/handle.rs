@@ -12,7 +12,7 @@ use super::{
 };
 use crate::{errors::StarboardResult, interactions::context::CommandCtx};
 
-pub fn get_sub_options(options: &Vec<CommandDataOption>) -> Option<&Vec<CommandDataOption>> {
+pub fn get_sub_options(options: &[CommandDataOption]) -> Option<&Vec<CommandDataOption>> {
     if options.len() != 1 {
         return None;
     }

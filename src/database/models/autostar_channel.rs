@@ -164,10 +164,10 @@ impl AutoStarChannel {
     }
 
     pub fn set_min_chars(&mut self, val: i16) -> Result<(), String> {
-        if let Some(max_chars) = self.max_chars {
-            if val > max_chars {
-                return Err("`min-chars` cannot be greater than `max-chars`.".to_string());
-            }
+        if let Some(max_chars) = self.max_chars
+            && val > max_chars
+        {
+            return Err("`min-chars` cannot be greater than `max-chars`.".to_string());
         }
 
         if val > constants::MAX_MIN_CHARS {
