@@ -1,3 +1,6 @@
+# this compose file is mostly for dev; you will likely not use it as-is for production
+# deployment
+
 name: starboard
 
 services:
@@ -10,9 +13,9 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
     command: >
       postgres
-      -c shared_buffers=4GB
-      -c work_mem=16MB
-      -c max_connections=500
+      -c shared_buffers=1GB
+      -c work_mem=4MB
+      -c max_connections=25
     volumes:
       - ./.postgres/postgres18:/var/lib/postgresql:Z
 
