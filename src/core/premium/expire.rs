@@ -1,14 +1,14 @@
-use futures::TryStreamExt;
 use std::sync::Arc;
 
-use crate::{
-    client::bot::StarboardBot, constants, core::premium::locks::refresh_premium_locks,
-    errors::StarboardResult, utils::into_id::IntoId,
-};
+use futures::TryStreamExt;
 
 use super::{
     is_premium::is_guild_premium,
     redeem::{RedeemPremiumResult, redeem_premium},
+};
+use crate::{
+    client::bot::StarboardBot, constants, core::premium::locks::refresh_premium_locks,
+    errors::StarboardResult, utils::into_id::IntoId,
 };
 
 pub async fn loop_expire_premium(bot: Arc<StarboardBot>) {

@@ -1,13 +1,12 @@
 use chrono::{DateTime, Days, Utc};
 
+use super::{is_premium::is_guild_premium, locks::refresh_premium_locks};
 use crate::{
     client::bot::StarboardBot,
     constants,
     database::{DbGuild, DbUser},
     errors::StarboardResult,
 };
-
-use super::{is_premium::is_guild_premium, locks::refresh_premium_locks};
 
 #[derive(PartialEq, Eq)]
 pub enum RedeemPremiumResult {
@@ -37,10 +36,10 @@ pub async fn redeem_premium(
     )
     .fetch_one(&mut *tx)
     .await?;
-    if let Some(assert_guild_status) = assert_guild_status {
-        if guild.premium_end != assert_guild_status {
-            return Ok(RedeemPremiumResult::StateMismatch);
-        }
+    if let Some(assert_guild_status) = assert_guild_status
+        && guild.premium_end != assert_guild_status
+    {
+        return Ok(RedeemPremiumResult::StateMismatch);
     }
 
     // get the user

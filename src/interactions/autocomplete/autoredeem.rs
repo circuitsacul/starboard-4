@@ -1,13 +1,12 @@
 use twilight_model::application::command::CommandOptionChoice;
 
+use super::best_matches::best_matches_as_choices;
 use crate::{
     database::DbMember,
     errors::StarboardResult,
     interactions::context::CommandCtx,
     utils::{id_as_i64::GetI64, into_id::IntoId},
 };
-
-use super::best_matches::best_matches_as_choices;
 
 pub async fn autoredeem_autocomplete(
     ctx: &CommandCtx,
@@ -36,6 +35,6 @@ pub async fn autoredeem_autocomplete(
     Ok(best_matches_as_choices(
         focused,
         &guild_names_ref,
-        Some(|n: &str| n.split(' ').last().unwrap().to_string()),
+        Some(|n: &str| n.split(' ').next_back().unwrap().to_string()),
     ))
 }

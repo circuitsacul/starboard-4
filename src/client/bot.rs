@@ -13,14 +13,13 @@ use twilight_model::{
 };
 use twilight_standby::Standby;
 
+use super::{cooldowns::Cooldowns, locks::Locks};
 use crate::{
     cache::Cache,
     client::config::Config,
     errors::{StarboardError, StarboardResult},
     utils::into_id::IntoId,
 };
-
-use super::{cooldowns::Cooldowns, locks::Locks};
 
 pub struct StarboardBot {
     pub http: HttpClient,
@@ -116,8 +115,6 @@ impl StarboardBot {
     }
 
     pub async fn handle_error(&self, err: &StarboardError) {
-        sentry::capture_error(err);
-
         let msg = format!("{err:#?}").trim().to_string();
         let msg = if msg.is_empty() {
             "Some Error".to_string()

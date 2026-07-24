@@ -18,6 +18,7 @@ use twilight_util::{
     snowflake::Snowflake,
 };
 
+use super::{AttachmentHandle, Embedder, parser::ParsedMessage};
 use crate::{
     cache::{MessageResult, models::message::CachedMessage},
     constants,
@@ -27,8 +28,6 @@ use crate::{
         avatar::ImageHashAvatar, id_as_i64::GetI64, into_id::IntoId, message_link::fmt_message_link,
     },
 };
-
-use super::{AttachmentHandle, Embedder, parser::ParsedMessage};
 
 lazy_static! {
     static ref URL_REGEX: Regex = Regex::new(concat!(
@@ -60,18 +59,18 @@ impl BuiltStarboardEmbed {
         force_partial: bool,
         watermark: bool,
     ) -> StarboardResult<Self> {
-        if let MessageResult::Ok(orig) = &handle.orig_message {
-            if !force_partial {
-                let parsed = ParsedMessage::parse(orig);
+        if let MessageResult::Ok(orig) = &handle.orig_message
+            && !force_partial
+        {
+            let parsed = ParsedMessage::parse(orig);
 
-                let built = Self::Full(FullBuiltStarboardEmbed {
-                    top_content: Self::build_top_content(handle),
-                    embeds: Self::build_embeds(handle, orig, &parsed, watermark).await?,
-                    upload_attachments: parsed.upload_attachments,
-                    components: Self::build_components(handle),
-                });
-                return Ok(built);
-            }
+            let built = Self::Full(FullBuiltStarboardEmbed {
+                top_content: Self::build_top_content(handle),
+                embeds: Self::build_embeds(handle, orig, &parsed, watermark).await?,
+                upload_attachments: parsed.upload_attachments,
+                components: Self::build_components(handle),
+            });
+            return Ok(built);
         }
 
         let built = Self::Partial(PartialBuiltStarboardEmbed {

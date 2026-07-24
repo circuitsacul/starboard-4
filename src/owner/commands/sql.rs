@@ -36,7 +36,7 @@ pub async fn run_sql(
 
     let mut tx = bot.pool.begin().await?;
     for (code, meta) in &blocks {
-        if meta.get("rollback").map_or(true, |v| v.parse().unwrap()) {
+        if meta.get("rollback").is_none_or(|v| v.parse().unwrap()) {
             rollback = true;
         }
 

@@ -1,5 +1,6 @@
 use twilight_interactions::command::{CommandModel, CreateCommand};
 
+use super::INVALID_MESSAGE_ERR;
 use crate::{
     core::{premium::is_premium::is_guild_premium, starboard::handle::RefreshMessage},
     database::DbMessage,
@@ -8,8 +9,6 @@ use crate::{
     interactions::context::CommandCtx,
     utils::{id_as_i64::GetI64, into_id::IntoId, message_link::parse_message_link},
 };
-
-use super::INVALID_MESSAGE_ERR;
 
 #[derive(CommandModel, CreateCommand)]
 #[command(

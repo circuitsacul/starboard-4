@@ -1,6 +1,5 @@
-use crate::{errors::StarboardResult, interactions::context::ComponentCtx};
-
 use super::dismiss::handle_dismiss;
+use crate::{errors::StarboardResult, interactions::context::ComponentCtx};
 
 pub async fn handle_component(ctx: ComponentCtx) -> StarboardResult<()> {
     let Some(id) = ctx.data.custom_id.strip_prefix("stateless::") else {

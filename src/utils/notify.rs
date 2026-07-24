@@ -3,9 +3,8 @@ use twilight_model::{
     id::{Id, marker::UserMarker},
 };
 
-use crate::{client::bot::StarboardBot, errors::StarboardResult};
-
 use super::dm;
+use crate::{client::bot::StarboardBot, errors::StarboardResult};
 
 pub async fn notify(
     bot: &StarboardBot,

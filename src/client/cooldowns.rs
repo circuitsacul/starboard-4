@@ -7,9 +7,8 @@ use twilight_model::id::{
     marker::{ChannelMarker, GuildMarker, UserMarker},
 };
 
-use crate::constants;
-
 use super::bot::StarboardBot;
+use crate::constants;
 
 pub struct Cooldowns {
     cycle_period: Duration,

@@ -14,6 +14,10 @@ use twilight_model::{
     },
 };
 
+use super::{
+    models::{guild::CachedGuild, member::CachedMember, message::CachedMessage, user::CachedUser},
+    update::UpdateCache,
+};
 use crate::{
     cache::models::channel::CachedChannel,
     client::bot::StarboardBot,
@@ -24,11 +28,6 @@ use crate::{
         async_dash::{AsyncDashMap, AsyncDashSet},
         get_status::get_status,
     },
-};
-
-use super::{
-    models::{guild::CachedGuild, member::CachedMember, message::CachedMessage, user::CachedUser},
-    update::UpdateCache,
 };
 
 macro_rules! update_cache_events {
@@ -162,7 +161,7 @@ impl Cache {
         self.guilds.with(&guild_id, |_, guild| {
             guild
                 .as_ref()
-                .map_or(false, |guild| guild.emojis.contains_key(&emoji_id))
+                .is_some_and(|guild| guild.emojis.contains_key(&emoji_id))
         })
     }
 
@@ -471,7 +470,7 @@ impl Cache {
         Ok(self.guilds.with(&guild_id, |_, guild| {
             guild
                 .as_ref()
-                .map_or(false, |guild| guild.channels.contains_key(&parent_id))
+                .is_some_and(|guild| guild.channels.contains_key(&parent_id))
         }))
     }
 
@@ -502,10 +501,10 @@ impl Cache {
                 .map_or(channel_id, |&parent_id| parent_id);
 
             // check the cached nsfw/sfw channel list
-            if let Some(channel) = guild.channels.get(&channel_id) {
-                if let Some(nsfw) = channel.is_nsfw {
-                    return CachedResult::Cached(nsfw);
-                }
+            if let Some(channel) = guild.channels.get(&channel_id)
+                && let Some(nsfw) = channel.is_nsfw
+            {
+                return CachedResult::Cached(nsfw);
             }
 
             CachedResult::NotCached(channel_id)

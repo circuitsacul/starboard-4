@@ -13,6 +13,7 @@ use twilight_model::{
     user::User,
 };
 
+use super::random::{get_config, get_embedder, get_post_query};
 use crate::{
     core::embedder::{Embedder, builder::BuiltStarboardEmbed},
     database::{DbMessage, Starboard, StarboardMessage},
@@ -21,8 +22,6 @@ use crate::{
     interactions::context::{CommandCtx, ComponentCtx},
     utils::{id_as_i64::GetI64, views::wait_for::wait_for_component},
 };
-
-use super::random::{get_config, get_embedder, get_post_query};
 
 #[derive(CommandModel, CreateCommand)]
 #[command(

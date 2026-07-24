@@ -1,10 +1,10 @@
-use dotenv::dotenv;
 use std::env;
+
+use dotenv::dotenv;
 
 pub struct Config {
     pub token: String,
     pub patreon_token: Option<String>,
-    pub sentry: Option<String>,
     pub shards: u32,
     pub db_url: String,
     pub db_connections: u32,
@@ -26,13 +26,12 @@ impl Config {
         };
         let token = env::var("DISCORD_TOKEN").expect("DISCORD_TOKEN not set");
         let patreon_token = env::var("PATREON_TOKEN").ok();
-        let sentry = env::var("SENTRY_URL").ok();
         let shards = env::var("SHARDS")
             .unwrap_or_else(|_| "1".to_string())
             .parse()
             .unwrap();
         let db_url = env::var("SB_DATABASE_URL").expect("No database url specified.");
-        let db_connections = env::var("DB_MAX_DB_CONNECTIONS")
+        let db_connections = env::var("SB_MAX_DB_CONNECTIONS")
             .map(|v| v.parse().unwrap())
             .unwrap_or(10);
         let error_channel = env::var("ERROR_CHANNEL_ID")
@@ -61,7 +60,6 @@ impl Config {
         Config {
             token,
             patreon_token,
-            sentry,
             shards,
             db_url,
             db_connections,

@@ -54,7 +54,7 @@ pub async fn format_settings(
 ) -> StarboardResult<FormattedStarboardSettings> {
     let ov_values = config
         .overrides
-        .get(0)
+        .first()
         .map(|ov| ov.get_overrides().unwrap());
 
     macro_rules! settings {
@@ -121,9 +121,9 @@ pub async fn format_settings(
     };
 
     let cooldown = {
-        let is_bold = ov_values.as_ref().map_or(false, |ov| {
-            ov.cooldown_count.is_some() || ov.cooldown_period.is_some()
-        });
+        let is_bold = ov_values
+            .as_ref()
+            .is_some_and(|ov| ov.cooldown_count.is_some() || ov.cooldown_period.is_some());
 
         let setting_name = if is_bold { "**cooldown**" } else { "cooldown" };
 

@@ -79,9 +79,7 @@ async fn starboard_embed(
 
     let mut desc = String::new();
     if config.starboard.premium_locked {
-        desc.push_str(concat!(
-            "This starboard is locked because it exceeds the non-premium limit.\n\n"
-        ));
+        desc.push_str("This starboard is locked because it exceeds the non-premium limit.\n\n");
     }
     write!(
         desc,
@@ -91,7 +89,7 @@ async fn starboard_embed(
     .unwrap();
 
     let embed = embed::build()
-        .title(format!("Starboard '{}'", &config.starboard.name))
+        .title(format!("Starboard '{}'", config.starboard.name))
         .description(desc)
         .field(
             EmbedFieldBuilder::new("Requirements", pretty.requirements)

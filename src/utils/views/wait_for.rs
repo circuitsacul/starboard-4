@@ -38,7 +38,7 @@ pub async fn wait_for_component(
             Some(user_id) => user_id,
         };
 
-        { msg.id == message_id && int_user_id == user_id && button_ids.contains(&&*data.custom_id) }
+        msg.id == message_id && int_user_id == user_id && button_ids.contains(&&*data.custom_id)
     };
 
     let event = tokio::time::timeout(

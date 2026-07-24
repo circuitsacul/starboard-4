@@ -9,12 +9,11 @@ use twilight_model::{
     },
 };
 
+use super::wait_for::wait_for_component;
 use crate::{
     errors::StarboardResult,
     interactions::context::{CommandCtx, ComponentCtx},
 };
-
-use super::wait_for::wait_for_component;
 
 pub fn components(current_page: usize, last_page: usize, done: bool) -> Vec<Component> {
     let buttons = vec![

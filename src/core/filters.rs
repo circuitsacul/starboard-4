@@ -5,6 +5,7 @@ use twilight_model::id::{
     marker::{ChannelMarker, GuildMarker, MessageMarker, UserMarker},
 };
 
+use super::premium::is_premium::is_guild_premium;
 use crate::{
     cache::{MessageResult, models::member::CachedMember},
     client::bot::StarboardBot,
@@ -12,8 +13,6 @@ use crate::{
     errors::StarboardResult,
     utils::{id_as_i64::GetI64, snowflake_age::SnowflakeAge},
 };
-
-use super::premium::is_premium::is_guild_premium;
 
 fn has_all_roles(user_roles: &[i64], required: &[i64]) -> bool {
     for role in required {
@@ -92,28 +91,28 @@ impl<'a> FilterEvaluater<'a> {
             }
         }
 
-        if let Some(req) = &check.user_has_all_of {
-            if !has_all_roles(&self.get_user_roles().await?, req) {
-                return Ok(false);
-            }
+        if let Some(req) = &check.user_has_all_of
+            && !has_all_roles(&self.get_user_roles().await?, req)
+        {
+            return Ok(false);
         }
 
-        if let Some(req) = &check.user_has_some_of {
-            if !has_any_role(&self.get_user_roles().await?, req) {
-                return Ok(false);
-            }
+        if let Some(req) = &check.user_has_some_of
+            && !has_any_role(&self.get_user_roles().await?, req)
+        {
+            return Ok(false);
         }
 
-        if let Some(req) = &check.user_missing_all_of {
-            if has_any_role(&self.get_user_roles().await?, req) {
-                return Ok(false);
-            }
+        if let Some(req) = &check.user_missing_all_of
+            && has_any_role(&self.get_user_roles().await?, req)
+        {
+            return Ok(false);
         }
 
-        if let Some(req) = &check.user_missing_some_of {
-            if has_all_roles(&self.get_user_roles().await?, req) {
-                return Ok(false);
-            }
+        if let Some(req) = &check.user_missing_some_of
+            && has_all_roles(&self.get_user_roles().await?, req)
+        {
+            return Ok(false);
         }
 
         // message context
@@ -132,27 +131,26 @@ impl<'a> FilterEvaluater<'a> {
         // 2. You can't actually send any messages in a forum
         //
         // Only forum starter messages will have self.id == self.channel.id
-        if channel_id.get() == message_id.get() {
-            if let Some(parent_id) = self
+        if channel_id.get() == message_id.get()
+            && let Some(parent_id) = self
                 .bot
                 .cache
                 .fog_parent_channel_id(self.bot, self.guild_id, channel_id)
                 .await?
-            {
-                channel_id = parent_id;
-            }
+        {
+            channel_id = parent_id;
         }
 
-        if let Some(req) = &check.in_channel {
-            if !req.contains(&channel_id.get_i64()) {
-                return Ok(false);
-            }
+        if let Some(req) = &check.in_channel
+            && !req.contains(&channel_id.get_i64())
+        {
+            return Ok(false);
         }
 
-        if let Some(req) = &check.not_in_channel {
-            if req.contains(&channel_id.get_i64()) {
-                return Ok(false);
-            }
+        if let Some(req) = &check.not_in_channel
+            && req.contains(&channel_id.get_i64())
+        {
+            return Ok(false);
         }
 
         if let Some(req) = &check.in_channel_or_sub_channels {
@@ -258,40 +256,40 @@ impl<'a> FilterEvaluater<'a> {
             return Ok(true);
         }
 
-        if let Some(req) = &check.voter_has_all_of {
-            if !has_all_roles(&self.get_voter_roles().await?, req) {
-                return Ok(false);
-            }
+        if let Some(req) = &check.voter_has_all_of
+            && !has_all_roles(&self.get_voter_roles().await?, req)
+        {
+            return Ok(false);
         }
 
-        if let Some(req) = &check.voter_has_some_of {
-            if !has_any_role(&self.get_voter_roles().await?, req) {
-                return Ok(false);
-            }
+        if let Some(req) = &check.voter_has_some_of
+            && !has_any_role(&self.get_voter_roles().await?, req)
+        {
+            return Ok(false);
         }
 
-        if let Some(req) = &check.voter_missing_all_of {
-            if has_any_role(&self.get_voter_roles().await?, req) {
-                return Ok(false);
-            }
+        if let Some(req) = &check.voter_missing_all_of
+            && has_any_role(&self.get_voter_roles().await?, req)
+        {
+            return Ok(false);
         }
 
-        if let Some(req) = &check.voter_missing_some_of {
-            if has_all_roles(&self.get_voter_roles().await?, req) {
-                return Ok(false);
-            }
+        if let Some(req) = &check.voter_missing_some_of
+            && has_all_roles(&self.get_voter_roles().await?, req)
+        {
+            return Ok(false);
         }
 
         let age_secs = message_id.age().as_secs();
-        if let Some(req) = check.newer_than {
-            if age_secs > req as u64 {
-                return Ok(false);
-            }
+        if let Some(req) = check.newer_than
+            && age_secs > req as u64
+        {
+            return Ok(false);
         }
-        if let Some(req) = check.older_than {
-            if age_secs < req as u64 {
-                return Ok(false);
-            }
+        if let Some(req) = check.older_than
+            && age_secs < req as u64
+        {
+            return Ok(false);
         }
 
         Ok(true)

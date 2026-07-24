@@ -2,10 +2,10 @@ use twilight_model::channel::{Attachment, message::embed::Embed};
 
 pub fn has_image(embeds: &Vec<Embed>, attachments: &Vec<Attachment>) -> bool {
     for attachment in attachments {
-        if let Some(content_type) = &attachment.content_type {
-            if content_type.starts_with("image") {
-                return true;
-            }
+        if let Some(content_type) = &attachment.content_type
+            && content_type.starts_with("image")
+        {
+            return true;
         }
     }
 

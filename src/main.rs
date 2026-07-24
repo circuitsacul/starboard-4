@@ -35,27 +35,18 @@ async fn main() {
 
     let config = Config::from_env();
 
-    let _sentry_guard = config.sentry.as_ref().map(|url| {
-        sentry::init((
-            url.to_owned(),
-            sentry::ClientOptions {
-                release: sentry::release_name!(),
-                ..Default::default()
-            },
-        ))
-    });
-
     let bot = match StarboardBot::new(config).await {
         Ok(val) => val,
         Err(why) => {
-            eprintln!("{}", &why);
+            eprintln!("{}", why);
             if let Some(bt) = ErrorCompat::backtrace(&why) {
-                eprintln!("{:#?}", &bt);
+                eprintln!("{:#?}", bt);
             }
-            sentry::capture_error(&why);
             return;
         }
     };
+
+    tracing::info!("READY");
 
     run(bot).await;
 }

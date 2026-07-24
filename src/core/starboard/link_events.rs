@@ -6,6 +6,7 @@ use twilight_model::{
     id::{Id, marker::MessageMarker},
 };
 
+use super::{config::StarboardConfig, handle::RefreshMessage};
 use crate::{
     client::bot::StarboardBot,
     core::premium::is_premium::is_guild_premium,
@@ -13,8 +14,6 @@ use crate::{
     errors::StarboardResult,
     utils::{id_as_i64::GetI64, into_id::IntoId},
 };
-
-use super::{config::StarboardConfig, handle::RefreshMessage};
 
 pub async fn handle_message_update(
     bot: Arc<StarboardBot>,

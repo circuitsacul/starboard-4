@@ -2,12 +2,11 @@ use std::sync::Arc;
 
 use twilight_model::application::interaction::{Interaction, InteractionData, InteractionType};
 
-use crate::{client::bot::StarboardBot, errors::StarboardResult};
-
 use super::{
     autocomplete::handle::handle_autocomplete, commands::handle::handle_command,
     components::handle::handle_component, context::Ctx,
 };
+use crate::{client::bot::StarboardBot, errors::StarboardResult};
 
 pub async fn handle_interaction(
     interaction: Interaction,

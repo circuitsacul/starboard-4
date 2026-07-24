@@ -11,6 +11,7 @@ use twilight_model::{
     },
 };
 
+use super::wait_for::wait_for_component;
 use crate::{
     client::bot::StarboardBot,
     errors::StarboardResult,
@@ -18,13 +19,11 @@ use crate::{
     utils::div_ceil::div_ceil,
 };
 
-use super::wait_for::wait_for_component;
-
 const ITEMS_PER_CHUNK: usize = 25;
 
 enum AnyContext {
     Initial(CommandCtx),
-    Select(CommandCtx, ComponentCtx),
+    Select(CommandCtx, Box<ComponentCtx>),
 }
 
 impl AnyContext {
@@ -107,7 +106,7 @@ impl SelectPaginator {
                 _ => unreachable!(),
             }
 
-            self.ctx = AnyContext::Select(self.ctx.into_initial_ctx(), ctx);
+            self.ctx = AnyContext::Select(self.ctx.into_initial_ctx(), Box::new(ctx));
         }
 
         Ok(())

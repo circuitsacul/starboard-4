@@ -1,6 +1,6 @@
 use crate::constants;
 
-pub fn validate_name(name: &String) -> Result<String, String> {
+pub fn validate_name(name: &str) -> Result<String, String> {
     if name.len() > constants::MAX_NAME_LENGTH as usize {
         return Err(format!(
             "The name cannot be longer than {} characters.",

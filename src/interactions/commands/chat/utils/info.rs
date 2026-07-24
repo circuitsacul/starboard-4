@@ -2,6 +2,7 @@ use twilight_interactions::command::{CommandModel, CreateCommand};
 use twilight_model::channel::message::MessageFlags;
 use twilight_util::builder::embed::EmbedFieldBuilder;
 
+use super::INVALID_MESSAGE_ERR;
 use crate::{
     concat_format,
     core::starboard::config::StarboardConfig,
@@ -16,8 +17,6 @@ use crate::{
         message_link::{fmt_message_link, parse_message_link},
     },
 };
-
-use super::INVALID_MESSAGE_ERR;
 
 #[derive(CommandModel, CreateCommand)]
 #[command(name = "info", desc = "Get info for a message.")]

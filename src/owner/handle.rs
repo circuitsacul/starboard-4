@@ -5,11 +5,10 @@ use twilight_model::id::{
     marker::{ChannelMarker, MessageMarker, UserMarker},
 };
 
+use super::commands;
 use crate::{
     cache::models::message::CachedMessage, client::bot::StarboardBot, errors::StarboardResult,
 };
-
-use super::commands;
 
 pub async fn handle_message(
     bot: &StarboardBot,

@@ -5,6 +5,9 @@ use twilight_model::id::{
     marker::{ChannelMarker, GuildMarker, MessageMarker},
 };
 
+use super::{
+    filters::FilterEvaluater, has_image::has_image, premium::is_premium::is_guild_premium,
+};
 use crate::{
     cache::{MessageResult, models::message::CachedMessage},
     client::bot::StarboardBot,
@@ -14,10 +17,6 @@ use crate::{
     },
     errors::StarboardResult,
     utils::{id_as_i64::GetI64, notify},
-};
-
-use super::{
-    filters::FilterEvaluater, has_image::has_image, premium::is_premium::is_guild_premium,
 };
 
 pub async fn handle(
@@ -91,7 +90,7 @@ pub async fn handle(
                 .cache
                 .fog_user(bot, message.author_id)
                 .await?
-                .map_or(false, |u| !u.is_bot);
+                .is_some_and(|u| !u.is_bot);
             if send {
                 let to_send = {
                     format!(
@@ -140,12 +139,12 @@ async fn get_status(
             asc.min_chars
         ));
     }
-    if let Some(max_chars) = asc.max_chars {
-        if event.content.len() > max_chars as usize {
-            invalid.push(format!(
-                "- Your message cannot be longer than {max_chars} characters.",
-            ));
-        }
+    if let Some(max_chars) = asc.max_chars
+        && event.content.len() > max_chars as usize
+    {
+        invalid.push(format!(
+            "- Your message cannot be longer than {max_chars} characters.",
+        ));
     }
     if asc.require_image && !has_image(&event.embeds, &event.attachments) {
         tokio::time::sleep(Duration::from_secs(3)).await;

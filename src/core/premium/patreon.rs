@@ -1,5 +1,6 @@
 use std::{collections::HashMap, sync::Arc};
 
+use super::roles::update_supporter_roles;
 use crate::{
     client::bot::StarboardBot,
     constants,
@@ -7,8 +8,6 @@ use crate::{
     errors::StarboardResult,
     utils::{into_id::IntoId, notify::notify},
 };
-
-use super::roles::update_supporter_roles;
 
 #[derive(Debug)]
 struct PatronData {

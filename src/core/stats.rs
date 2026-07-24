@@ -3,14 +3,13 @@ use twilight_model::id::{
     marker::{GuildMarker, UserMarker},
 };
 
+use super::{premium::is_premium::is_guild_premium, xproles::refresh_xpr};
 use crate::{
     client::bot::StarboardBot,
     database::{DbMember, Starboard},
     errors::StarboardResult,
     utils::id_as_i64::GetI64,
 };
-
-use super::{premium::is_premium::is_guild_premium, xproles::refresh_xpr};
 
 #[derive(Default)]
 pub struct MemberStats {

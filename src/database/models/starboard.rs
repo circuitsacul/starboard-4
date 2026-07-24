@@ -58,8 +58,6 @@ macro_rules! starboard_from_row {
     }};
 }
 
-pub(crate) use starboard_from_row;
-
 impl Starboard {
     pub async fn create(
         pool: &sqlx::PgPool,

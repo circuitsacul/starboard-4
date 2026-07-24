@@ -110,10 +110,10 @@ impl EditBehavior {
             };
             settings.exclusive_group = Some(Some(group.id));
         }
-        if let Some(val) = self.remove_exclusive_group {
-            if val {
-                settings.exclusive_group = Some(None);
-            }
+        if let Some(val) = self.remove_exclusive_group
+            && val
+        {
+            settings.exclusive_group = Some(None);
         }
         if let Some(val) = self.exclusive_group_priority {
             settings.exclusive_group_priority = Some(val as i16);

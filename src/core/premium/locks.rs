@@ -60,7 +60,7 @@ pub async fn refresh_premium_locks(
 
     // lock autostar channels
     let count = sqlx::query!(
-        "SELECT count(*) as count FROM autostar_channels WHERE guild_id=$1 AND 
+        "SELECT count(*) as count FROM autostar_channels WHERE guild_id=$1 AND
         premium_locked=false",
         guild_id
     )
