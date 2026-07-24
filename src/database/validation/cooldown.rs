@@ -1,10 +1,10 @@
-use lazy_static::lazy_static;
+use std::sync::LazyLock;
+
+use regex::Regex;
 
 pub fn parse_cooldown(inp: &str) -> Result<(i16, i16), String> {
-    lazy_static! {
-        static ref RE: regex::Regex =
-            regex::Regex::new(r#"(?P<count>\d+).+?(?P<secs>\d+)"#).unwrap();
-    }
+    static RE: LazyLock<Regex> =
+        LazyLock::new(|| Regex::new(r#"(?P<count>\d+).+?(?P<secs>\d+)"#).unwrap());
 
     let found = match RE.captures(inp) {
         None => {

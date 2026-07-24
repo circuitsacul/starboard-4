@@ -23,7 +23,6 @@ emojis = "0.8.0"
 floodgate = "0.5.1"
 futures = "0.3.31"
 humantime = "2.3.0"
-lazy_static = "1.5.0"
 moka = { version = "0.11.3", features = ["future"] }
 psutil = "3.3.0"
 regex = "1.12.2"

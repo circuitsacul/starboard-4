@@ -1,6 +1,5 @@
-use std::str::FromStr;
+use std::{str::FromStr, sync::LazyLock};
 
-use lazy_static::lazy_static;
 use regex::Regex;
 use twilight_http::request::channel::reaction::RequestReactionType;
 use twilight_mention::Mention;
@@ -57,9 +56,7 @@ impl SimpleEmoji {
         bot: &StarboardBot,
         guild_id: Id<GuildMarker>,
     ) -> Vec<Self> {
-        lazy_static! {
-            static ref CUSTOM: Regex = Regex::new(r"^\d{10,}").unwrap();
-        }
+        static CUSTOM: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^\d{10,}").unwrap());
 
         let mut emojis = Vec::new();
 

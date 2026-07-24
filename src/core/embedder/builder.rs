@@ -1,6 +1,5 @@
-use std::fmt::Write;
+use std::{fmt::Write, sync::LazyLock};
 
-use lazy_static::lazy_static;
 use regex::Regex;
 use twilight_model::{
     channel::message::{
@@ -29,13 +28,13 @@ use crate::{
     },
 };
 
-lazy_static! {
-    static ref URL_REGEX: Regex = Regex::new(concat!(
+static URL_REGEX: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(concat!(
         r"^https?://(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]",
         r"{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&/=]*)$"
     ))
-    .unwrap();
-}
+    .unwrap()
+});
 
 pub struct FullBuiltStarboardEmbed {
     pub top_content: String,
