@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "SELECT count(*) as count FROM autostar_channels WHERE guild_id=$1 AND \n        premium_locked=false",
+  "query": "SELECT count(*) as count FROM autostar_channels WHERE guild_id=$1 AND\n        premium_locked=false",
   "describe": {
     "columns": [
       {
@@ -18,5 +18,5 @@
       null
     ]
   },
-  "hash": "71da158d194f732eb561670f52249305966b553f38ebf7839b0a5064f02c0ebf"
+  "hash": "eee0fcf44d279a0f7f9c1db36cc3747066547fb236f1f8e4f4e53b6c68800bb1"
 }

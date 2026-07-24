@@ -16,6 +16,8 @@ services:
       -c shared_buffers=1GB
       -c work_mem=4MB
       -c max_connections=25
+    ports:
+      - 5432:5432
     volumes:
       - ./.postgres/postgres18:/var/lib/postgresql:Z
 
