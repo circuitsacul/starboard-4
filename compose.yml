@@ -22,7 +22,7 @@ services:
   starboard:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Containerfile
     env_file: .env
     environment:
       SB_DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
