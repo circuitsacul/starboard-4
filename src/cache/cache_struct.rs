@@ -104,7 +104,7 @@ pub struct Cache {
 
     // misc
     pub responses: MokaCache<Id<MessageMarker>, Id<MessageMarker>>,
-    pub auto_deleted_posts: RwLock<cached::SizedCache<Id<MessageMarker>, ()>>,
+    pub auto_deleted_posts: RwLock<cached::LruCache<Id<MessageMarker>, ()>>,
 }
 
 impl Cache {
@@ -124,9 +124,12 @@ impl Cache {
                 constants::MAX_STORED_RESPONSES,
                 constants::STORED_RESPONSES_TTI,
             ),
-            auto_deleted_posts: RwLock::new(cached::SizedCache::with_size(
-                constants::MAX_STORED_AUTO_DELETES,
-            )),
+            auto_deleted_posts: RwLock::new(
+                cached::LruCache::<Id<MessageMarker>, ()>::builder()
+                    .max_size(constants::MAX_STORED_AUTO_DELETES)
+                    .build()
+                    .unwrap(),
+            ),
         }
     }
 
@@ -252,7 +255,7 @@ impl Cache {
         bot: &StarboardBot,
         user_id: Id<UserMarker>,
     ) -> StarboardResult<Option<Arc<CachedUser>>> {
-        if let Some(cached) = self.users.get(&user_id) {
+        if let Some(cached) = self.users.get(&user_id).await {
             return Ok(cached);
         }
 
@@ -279,7 +282,7 @@ impl Cache {
         guild_id: Id<GuildMarker>,
         user_id: Id<UserMarker>,
     ) -> StarboardResult<Option<Arc<CachedMember>>> {
-        if let Some(cached) = self.members.get(&(guild_id, user_id)) {
+        if let Some(cached) = self.members.get(&(guild_id, user_id)).await {
             return Ok(cached);
         }
 
@@ -348,7 +351,7 @@ impl Cache {
         channel_id: Id<ChannelMarker>,
         message_id: Id<MessageMarker>,
     ) -> StarboardResult<MessageResult> {
-        if let Some(cached) = self.messages.get(&message_id) {
+        if let Some(cached) = self.messages.get(&message_id).await {
             return Ok(cached.into());
         }
 

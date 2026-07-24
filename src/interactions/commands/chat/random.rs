@@ -24,7 +24,7 @@ pub fn get_post_query(
     author: Option<i64>,
     min_points: Option<i16>,
     max_points: Option<i16>,
-) -> sqlx::QueryBuilder<'static, sqlx::Postgres> {
+) -> sqlx::QueryBuilder<sqlx::Postgres> {
     let init_query = r#"
     SELECT * FROM starboard_messages
     WHERE EXISTS (
