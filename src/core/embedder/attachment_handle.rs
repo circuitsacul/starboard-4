@@ -1,5 +1,7 @@
+use std::sync::LazyLock;
+
 use async_trait::async_trait;
-use lazy_static::lazy_static;
+use regex::Regex;
 use twilight_model::{
     channel::{Attachment as ReceivedAttachment, message::embed::Embed},
     http::attachment::Attachment,
@@ -27,17 +29,13 @@ impl AttachmentHandle {
     ) -> StarboardResult<Option<Attachment>> {
         // this should always be a proxy url, but we do this to make 100%
         // sure that there isn't a bug that could potentially leak the VPS ip.
-        {
-            lazy_static! {
-                static ref RE: regex::Regex = regex::Regex::new(
-                    r#"^https://[\w\.\-]*\.(discord\.com|discordapp\.com|discordapp.net)"#
-                )
-                .unwrap();
-            }
+        static RE: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(r#"^https://[\w\.\-]*\.(discord\.com|discordapp\.com|discordapp.net)"#)
+                .unwrap()
+        });
 
-            if !RE.is_match(&self.url) {
-                return Ok(None);
-            }
+        if !RE.is_match(&self.url) {
+            return Ok(None);
         }
 
         // we only want to download files under 8mb

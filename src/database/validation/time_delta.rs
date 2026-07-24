@@ -1,6 +1,5 @@
-use std::{borrow::Cow, time::Duration};
+use std::{borrow::Cow, sync::LazyLock, time::Duration};
 
-use lazy_static::lazy_static;
 use regex::Regex;
 
 use crate::constants;
@@ -36,9 +35,8 @@ fn unit_conversion(unit: &str) -> Option<i64> {
 }
 
 pub fn parse_time_delta(inp: &str) -> Result<i64, String> {
-    lazy_static! {
-        static ref RE: Regex = Regex::new(r#"^(?P<value>\d+)(?P<unit>\w+)$"#).unwrap();
-    }
+    static RE: LazyLock<Regex> =
+        LazyLock::new(|| Regex::new(r#"^(?P<value>\d+)(?P<unit>\w+)$"#).unwrap());
 
     let mut seconds = 0;
     let mut carry = None;

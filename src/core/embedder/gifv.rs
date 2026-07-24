@@ -1,18 +1,14 @@
-use std::str::FromStr;
+use std::{str::FromStr, sync::LazyLock};
 
-use lazy_static::lazy_static;
+use regex::Regex;
 use reqwest::Url;
 
 pub fn get_gif_url(url: &str, provider: &str) -> Option<String> {
-    lazy_static! {
-        static ref TENOR: regex::Regex =
-            regex::Regex::new(r#"^https://media\.tenor\.com?/(.+)/(.*)\.\w+$"#).unwrap();
-    }
-    lazy_static! {
-        static ref GIPHY: regex::Regex =
-            regex::Regex::new(r#"^https://media\d*\.giphy\.com/media/([\w-]+)/(.*)\.gif$"#)
-                .unwrap();
-    }
+    static TENOR: LazyLock<Regex> =
+        LazyLock::new(|| Regex::new(r#"^https://media\.tenor\.com?/(.+)/(.*)\.\w+$"#).unwrap());
+    static GIPHY: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(r#"^https://media\d*\.giphy\.com/media/([\w-]+)/(.*)\.gif$"#).unwrap()
+    });
 
     match provider {
         "Tenor" => {

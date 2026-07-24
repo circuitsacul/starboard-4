@@ -1,8 +1,8 @@
 //! Parsing and validation for different types of mentions.
 
-use std::{collections::HashSet, str::FromStr};
+use std::{collections::HashSet, str::FromStr, sync::LazyLock};
 
-use lazy_static::lazy_static;
+use regex::Regex;
 use twilight_model::id::{Id, marker::GuildMarker};
 
 use crate::{client::bot::StarboardBot, errors::StarboardResult, utils::id_as_i64::GetI64};
@@ -12,9 +12,7 @@ where
     IdT: FromStr,
     <IdT as FromStr>::Err: std::fmt::Debug,
 {
-    lazy_static! {
-        static ref RE: regex::Regex = regex::Regex::new(r#"\d+"#).unwrap();
-    }
+    static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r#"\d+"#).unwrap());
 
     RE.find_iter(inp).map(|val| val.as_str().parse().unwrap())
 }

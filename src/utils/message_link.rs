@@ -1,6 +1,5 @@
-use std::fmt::Display;
+use std::{fmt::Display, sync::LazyLock};
 
-use lazy_static::lazy_static;
 use regex::Regex;
 
 pub fn parse_message_link(link: &str) -> Option<(i64, i64)> {
@@ -17,9 +16,8 @@ pub fn parse_message_link(link: &str) -> Option<(i64, i64)> {
         return Some((channel_id, message_id));
     }
 
-    lazy_static! {
-        static ref RE: Regex = Regex::new(r#"/channels/(\d+)/(\d+)/(\d+)"#).unwrap();
-    }
+    static RE: LazyLock<Regex> =
+        LazyLock::new(|| Regex::new(r#"/channels/(\d+)/(\d+)/(\d+)"#).unwrap());
 
     let ret = RE.captures(link)?;
 
