@@ -4,7 +4,7 @@ use std::{
     time::{Duration, Instant},
 };
 
-use sqlx::{Column, Executor, Row, ValueRef, postgres::PgRow};
+use sqlx::{Column, Row, ValueRef, postgres::PgRow};
 use twilight_model::id::{
     Id,
     marker::{ChannelMarker, MessageMarker},
@@ -26,7 +26,7 @@ pub async fn run_sql(
         bot.http.create_typing_trigger(channel_id).await?;
         None
     } else {
-        bot.cache.responses.get(&message_id)
+        bot.cache.responses.get(&message_id).await
     };
 
     let mut rollback = false;
@@ -49,7 +49,9 @@ pub async fn run_sql(
         for _ in 0..total_execs {
             let elapsed = if return_results {
                 let start = Instant::now();
-                let rows = tx.fetch_all(code.as_str()).await;
+                let rows = sqlx::raw_sql(sqlx::AssertSqlSafe(code.as_str()))
+                    .fetch_all(&mut *tx)
+                    .await;
 
                 let elapsed = start.elapsed();
                 match rows {
@@ -63,7 +65,9 @@ pub async fn run_sql(
                 elapsed
             } else {
                 let start = Instant::now();
-                let ret = tx.execute(code.as_str()).await;
+                let ret = sqlx::raw_sql(sqlx::AssertSqlSafe(code.as_str()))
+                    .execute(&mut *tx)
+                    .await;
                 if let Err(why) = ret {
                     err = Some(why.to_string());
                 }

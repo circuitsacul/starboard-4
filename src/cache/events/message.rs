@@ -46,7 +46,7 @@ impl UpdateCache for MessageDeleteBulk {
 #[async_trait]
 impl UpdateCache for MessageUpdate {
     async fn update_cache(&self, cache: &Cache) {
-        let Some(cached) = cache.messages.get(&self.id) else {
+        let Some(cached) = cache.messages.get(&self.id).await else {
             return;
         };
 

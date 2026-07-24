@@ -163,7 +163,7 @@ fn components(
 
 async fn scrolling_paginator(
     mut ctx: CommandCtx,
-    mut query: QueryBuilder<'_, Postgres>,
+    mut query: QueryBuilder<Postgres>,
     starboard: Starboard,
 ) -> StarboardResult<()> {
     let user_id = ctx.interaction.author_id().unwrap();
