@@ -49,6 +49,7 @@ pub fn get_gif_url(url: &str, provider: &str) -> Option<String> {
 
             Some(format!("{origin}/{gif_id}-size_restricted.gif"))
         }
+        "Klipy" => Some(url.to_owned()), // I take back everything bad I said about klipy
         other => {
             eprintln!("Unkown GIFV provider: {other}\n{url}");
             None
