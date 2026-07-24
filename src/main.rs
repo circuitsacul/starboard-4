@@ -27,10 +27,6 @@ fn init_tracing() {
 
 #[main]
 async fn main() {
-    rustls::crypto::aws_lc_rs::default_provider()
-        .install_default()
-        .unwrap();
-
     init_tracing();
 
     let config = Config::from_env();
