@@ -6,6 +6,7 @@ COPY Cargo.toml Cargo.toml
 COPY Cargo.lock Cargo.lock
 COPY .sqlx .sqlx
 COPY migrations migrations
+COPY build.rs build.rs
 
 ARG APPNAME=starboard
 RUN --mount=type=cache,id=starboard-cargo-registry,target=/usr/local/cargo/registry,sharing=shared \

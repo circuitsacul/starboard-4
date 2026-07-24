@@ -4,6 +4,3 @@
 debug/
 target/
 **/*.rs.bk
-
-# postgres data dir
-.postgres

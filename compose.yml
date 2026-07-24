@@ -17,9 +17,9 @@ services:
       -c work_mem=4MB
       -c max_connections=25
     ports:
-      - 5432:5432
+      - "127.0.0.1:5432:5432"
     volumes:
-      - ./.postgres/postgres18:/var/lib/postgresql:Z
+      - postgres-data:/var/lib/postgresql
 
   starboard:
     build:
@@ -30,3 +30,6 @@ services:
       SB_DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
     restart: unless-stopped
     depends_on: [postgres]
+
+volumes:
+  postgres-data:
