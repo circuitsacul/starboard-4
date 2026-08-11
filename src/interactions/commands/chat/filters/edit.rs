@@ -328,9 +328,9 @@ impl Edit {
             }
 
             if val == -1 {
-                filter.min_attachments = None;
+                filter.max_attachments = None;
             } else {
-                filter.min_attachments = Some(val.try_into().unwrap());
+                filter.max_attachments = Some(val.try_into().unwrap());
             }
         }
         if let Some(val) = self.min_length {
