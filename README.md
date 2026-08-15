@@ -1,9 +1,9 @@
-# Starboard-4
-A feature-rich and reliable Starboard bot, trusted by thousands of servers.
+# starboard-4
+A pretty good starboard bot.
 
- - [Invite Starboard](https://discord.com/api/oauth2/authorize?client_id=700796664276844612&permissions=275683339328&scope=applications.commands%20bot)
- - [Get Support](https://discord.gg/3gK8mSA)
- - [Documentation](https://starboard.best)
+ - [invite](https://discord.com/api/oauth2/authorize?client_id=700796664276844612&permissions=275683339328&scope=applications.commands%20bot)
+ - [support](https://discord.gg/3gK8mSA)
+ - [docs](https://starboard.best)
 
 ## Features
  - Multiple starboards per server

@@ -25,7 +25,7 @@ pub fn qualify_emoji(target: &str) -> &str {
 }
 
 pub fn compare_unicode_emojis(left: &str, right: &str) -> bool {
-    qualify_emoji(left) == qualify_emoji(right)
+    remove_v16(qualify_emoji(left)) == remove_v16(qualify_emoji(right))
 }
 
 #[derive(Clone)]
@@ -106,7 +106,7 @@ impl SimpleEmoji {
             }
         } else {
             RequestReactionType::Unicode {
-                name: remove_v16(qualify_emoji(&self.raw)),
+                name: qualify_emoji(&self.raw),
             }
         }
     }
