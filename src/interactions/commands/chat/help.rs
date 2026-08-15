@@ -47,35 +47,27 @@ pub struct Help;
 impl Help {
     pub async fn callback(self, mut ctx: CommandCtx) -> StarboardResult<()> {
         let emb = embed::build()
-            .title("Starboard - The Best Discord Starboard")
-            .description("Starboard is a reliable and feature-rich starboard bot for Discord.")
+            .title("Starboard")
+            .description("A pretty good starboard bot.")
             .field(EmbedFieldBuilder::new(
-                "Useful Commands",
+                "Getting Started",
                 concat!(
-                    "`/starboards view`: View all of your starboards.\n",
-                    "`/starboards create`: Create a new starboard.\n",
-                    "`/starboards edit`: Edit the configuration for a starboard.\n",
+                    "Get started by running `/starboards create` to create a starboard, and\n",
+                    "then `/starboards edit requirements` to change requirement settings.\n",
+                    "- `required`: how many upvotes a message needs\n",
+                    "- `upvote-emojis`: what emojis count as upvotes\n",
+                    "- `self-vote`: whether you can vote on your own messages\n\n",
+                    "All other commands and settings are available in the docs."
                 ),
             ))
             .field(EmbedFieldBuilder::new(
-                "Starboard's Features",
+                "Features",
                 concat!(
-                    "Starboard's key free features are:\n",
                     "- Multiple starboards\n",
                     "- Custom avatar/username for starboards (via webhooks)\n",
                     "- Autostar channels\n",
                     "- Complete per-channel starboard configuration\n",
                     "- Limited per-role starboard configuration\n",
-                ),
-            ))
-            .field(EmbedFieldBuilder::new(
-                "Support Starboard",
-                concat_format!(
-                    "If you like Starboard and want to support it, you can do ";
-                    "so by [voting]({}) or " <- constants::VOTE_URL;
-                    "[leaving a review]({}) " <- constants::REVIEW_URL;
-                    "on Top.GG.\n\nIf you really want, you can also get Starboard Premium ";
-                    "by [becoming a patron]({})." <- constants::PATREON_URL;
                 ),
             ))
             .field(EmbedFieldBuilder::new(

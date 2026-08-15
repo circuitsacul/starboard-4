@@ -17,8 +17,6 @@ pub const INVITE_URL: &str = "https://discord.com/api/oauth2/authorize?client_id
 pub const SUPPORT_URL: &str = "https://discord.gg/3gK8mSA";
 pub const SOURCE_URL: &str = "https://github.com/CircuitSacul/Starboard-4";
 pub const PATREON_URL: &str = "https://patreon.com/CircuitSacul";
-pub const VOTE_URL: &str = "https://top.gg/bot/700796664276844612/vote";
-pub const REVIEW_URL: &str = "https://top.gg/bot/700796664276844612#reviews";
 
 // Docs
 pub const DOCS_URL: &str = "https://docs.starboard.best";

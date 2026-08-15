@@ -15,8 +15,11 @@ pub fn validate_name(name: &str) -> Result<String, String> {
         .filter(|c| c.is_ascii_digit() || c.is_ascii_lowercase() || *c == '_' || *c == '-')
         .collect();
 
-    if filtered.len() < 3 {
-        Err("The name must be at least 3 characters (special characters are excluded).".to_string())
+    if filtered.len() < constants::MIN_NAME_LENGTH as usize {
+        Err(format!(
+            "The name must be at least {} characters (special characters are excluded).",
+            constants::MIN_NAME_LENGTH
+        ))
     } else {
         Ok(filtered)
     }

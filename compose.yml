@@ -29,7 +29,6 @@ services:
     environment:
       SB_DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
     restart: unless-stopped
-    depends_on: [postgres]
 
 volumes:
   postgres-data:
