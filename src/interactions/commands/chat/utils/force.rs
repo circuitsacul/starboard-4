@@ -74,6 +74,8 @@ impl Force {
             return Ok(());
         }
 
+        ctx.defer(true).await?;
+
         let ret = get_or_create_original(
             &ctx.bot,
             guild_id,
