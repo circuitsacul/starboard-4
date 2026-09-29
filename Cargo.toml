@@ -4,13 +4,16 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-twilight-gateway = "0.17.1"
-twilight-http = "0.17.1"
-twilight-mention = "0.17.0"
-twilight-model = "0.17.1"
-twilight-standby = "0.17.0"
-twilight-util = { version = "0.17.0", features = ["builder", "snowflake"] }
-twilight-validate = "0.17.0"
+twilight-gateway = { git = "https://github.com/twilight-rs/twilight.git", rev = "debf45a7a7caa72b7271073ca9683ff68fc306e2" }
+twilight-http = { git = "https://github.com/twilight-rs/twilight.git", rev = "debf45a7a7caa72b7271073ca9683ff68fc306e2" }
+twilight-mention = { git = "https://github.com/twilight-rs/twilight.git", rev = "debf45a7a7caa72b7271073ca9683ff68fc306e2" }
+twilight-model = { git = "https://github.com/twilight-rs/twilight.git", rev = "debf45a7a7caa72b7271073ca9683ff68fc306e2" }
+twilight-standby = { git = "https://github.com/twilight-rs/twilight.git", rev = "debf45a7a7caa72b7271073ca9683ff68fc306e2" }
+twilight-util = { git = "https://github.com/twilight-rs/twilight.git", rev = "debf45a7a7caa72b7271073ca9683ff68fc306e2", features = [
+  "builder",
+  "snowflake"
+] }
+twilight-validate = { git = "https://github.com/twilight-rs/twilight.git", rev = "debf45a7a7caa72b7271073ca9683ff68fc306e2" }
 
 twilight-interactions = "0.17.1"
 
@@ -51,3 +54,6 @@ tokio = { version = "1.53.1", features = ["full"] }
 tracing = "0.1.44"
 tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
 unicode-segmentation = "1.13.3"
+
+[patch.crates-io]
+twilight-model = { git = "https://github.com/twilight-rs/twilight.git", rev = "debf45a7a7caa72b7271073ca9683ff68fc306e2" }

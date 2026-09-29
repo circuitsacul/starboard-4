@@ -19,6 +19,7 @@ pub fn modify_imgur_embed(mut embed: Embed) -> ImgurResult {
             filename: format!("imgur_video.{ext}"),
             content_type: Some("video".to_string()),
             url: proxy.to_owned(),
+            is_spoiler: false,
         });
     }
 

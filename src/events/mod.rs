@@ -87,7 +87,7 @@ async fn match_events(
             let message_id = event.id;
             let author_id = event.author.id;
             let guild_id = event.guild_id;
-            let msg: Arc<CachedMessage> = Arc::new(event.0.into());
+            let msg: Arc<CachedMessage> = Arc::new(event.message.into());
 
             if let Some(guild_id) = guild_id {
                 core::autostar::handle(

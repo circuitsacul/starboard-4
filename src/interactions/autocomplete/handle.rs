@@ -1,8 +1,7 @@
-use twilight_model::{
-    application::interaction::application_command::{CommandDataOption, CommandOptionValue},
-    http::interaction::{InteractionResponse, InteractionResponseType},
+use twilight_model::application::interaction::application_command::{
+    CommandDataOption, CommandOptionValue,
 };
-use twilight_util::builder::InteractionResponseDataBuilder;
+use twilight_util::builder::interaction_response::AutocompleteBuilder;
 
 use super::{
     autoredeem::autoredeem_autocomplete, autostar_name::autostar_name_autocomplete,
@@ -142,13 +141,7 @@ pub async fn handle_autocomplete(ctx: CommandCtx) -> StarboardResult<()> {
     };
 
     let i = ctx.bot.interaction_client().await;
-    let data = InteractionResponseDataBuilder::new()
-        .choices(options)
-        .build();
-    let resp = InteractionResponse {
-        data: Some(data),
-        kind: InteractionResponseType::ApplicationCommandAutocompleteResult,
-    };
+    let resp = AutocompleteBuilder::new(options).build();
     i.create_response(ctx.interaction.id, &ctx.interaction.token, &resp)
         .await?;
 

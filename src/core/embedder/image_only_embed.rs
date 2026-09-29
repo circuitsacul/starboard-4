@@ -15,6 +15,7 @@ pub fn maybe_get_attachment_handle(embed: &Embed) -> Option<AttachmentHandle> {
                 filename: "GIF".to_string(),
                 content_type: Some("image/gif".to_string()),
                 url,
+                is_spoiler: false,
             };
 
             return Some(attachment);
@@ -61,6 +62,7 @@ pub fn maybe_get_attachment_handle(embed: &Embed) -> Option<AttachmentHandle> {
     };
 
     let attachment = AttachmentHandle {
+        is_spoiler: false,
         filename: name,
         content_type: Some(ct),
         url,

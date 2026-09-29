@@ -3,7 +3,7 @@ use std::sync::LazyLock;
 use async_trait::async_trait;
 use regex::Regex;
 use twilight_model::{
-    channel::{Attachment as ReceivedAttachment, message::embed::Embed},
+    channel::{Attachment as ReceivedAttachment, AttachmentFlags, message::embed::Embed},
     http::attachment::Attachment,
 };
 use twilight_util::builder::embed::{EmbedBuilder, ImageSource};
@@ -19,6 +19,7 @@ pub struct AttachmentHandle {
     pub filename: String,
     pub content_type: Option<String>,
     pub url: String,
+    pub is_spoiler: bool,
 }
 
 impl AttachmentHandle {
@@ -50,11 +51,13 @@ impl AttachmentHandle {
         // download the file
         let file = bot.reqwest.get(&self.url).send().await?.bytes().await?;
 
-        Ok(Some(Attachment::from_bytes(
-            self.filename.clone(),
-            file.to_vec(),
-            id,
-        )))
+        Ok(Some(self.attachment_from_bytes(file.to_vec(), id)))
+    }
+
+    fn attachment_from_bytes(&self, file: Vec<u8>, id: u64) -> Attachment {
+        let mut attachment = Attachment::from_bytes(self.filename.clone(), file, id);
+        attachment.is_spoiler = Some(self.is_spoiler);
+        attachment
     }
 
     pub fn from_attachment(attachment: &ReceivedAttachment) -> Self {
@@ -73,6 +76,9 @@ impl AttachmentHandle {
             filename: attachment.filename.clone(),
             content_type,
             url: attachment.url.clone(),
+            is_spoiler: attachment
+                .flags
+                .is_some_and(|flags| flags.contains(AttachmentFlags::IS_SPOILER)),
         }
     }
 
@@ -94,7 +100,7 @@ impl AttachmentHandle {
     }
 
     pub fn embedable_image(&self) -> Option<ImageSource> {
-        if self.filename.starts_with("SPOILER_") {
+        if self.is_spoiler {
             return None;
         }
 

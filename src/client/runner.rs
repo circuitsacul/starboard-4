@@ -4,7 +4,7 @@ use tokio::{
     signal::unix::{SignalKind, signal},
     task::JoinSet,
 };
-use twilight_gateway::{EventTypeFlags, Shard, StreamExt as _, create_iterator};
+use twilight_gateway::{EventTypeFlags, Shard, StreamExt as _, bucket};
 
 use super::cooldowns::Cooldowns;
 use crate::{
@@ -46,13 +46,9 @@ pub async fn run(bot: StarboardBot) {
     tokio::spawn(loop_update_supporter_roles(bot.clone()));
 
     // handle events
-    let shards: Vec<_> = create_iterator(
-        0..bot.config.shards,
-        bot.config.shards,
-        bot.gw_config.clone(),
-        |_, b| b.build(),
-    )
-    .collect();
+    let shards: Vec<_> = bucket(0, 1, bot.config.shards)
+        .map(|id| Shard::with_config(id, bot.gw_config.clone()))
+        .collect();
 
     let mut runners = JoinSet::new();
     for shard in shards {

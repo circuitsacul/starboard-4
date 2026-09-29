@@ -8,11 +8,11 @@ use twilight_model::{
     },
     channel::{
         Message,
-        message::{AllowedMentions, MessageFlags},
+        message::{AllowedMentions, Component, MessageFlags},
     },
     http::interaction::{InteractionResponse, InteractionResponseData, InteractionResponseType},
 };
-use twilight_util::builder::InteractionResponseDataBuilder;
+use twilight_util::builder::interaction_response::ChannelMessageBuilder;
 
 use crate::{client::bot::StarboardBot, errors::StarboardResult};
 
@@ -39,8 +39,8 @@ impl<T> Ctx<T> {
         }
     }
 
-    pub fn build_resp(&self) -> InteractionResponseDataBuilder {
-        InteractionResponseDataBuilder::new().allowed_mentions(AllowedMentions::default())
+    pub fn build_resp(&self) -> ChannelMessageBuilder {
+        ChannelMessageBuilder::new().allowed_mentions(AllowedMentions::default())
     }
 
     pub async fn raw_respond(
@@ -103,18 +103,14 @@ impl<T> Ctx<T> {
         }
 
         self.raw_respond(
-            Some(data.build()),
+            data.build().data,
             InteractionResponseType::DeferredChannelMessageWithSource,
         )
         .await
     }
 
-    pub async fn respond(&mut self, data: InteractionResponseData) -> TwResult {
-        self.raw_respond(
-            Some(data),
-            InteractionResponseType::ChannelMessageWithSource,
-        )
-        .await
+    pub async fn respond(&mut self, response: InteractionResponse) -> TwResult {
+        self.raw_respond(response.data, response.kind).await
     }
 
     pub async fn respond_str(&mut self, response: &str, ephemeral: bool) -> TwResult {
@@ -123,22 +119,18 @@ impl<T> Ctx<T> {
             data = data.flags(MessageFlags::EPHEMERAL);
         }
 
-        self.raw_respond(
-            Some(data.build()),
-            InteractionResponseType::ChannelMessageWithSource,
-        )
-        .await
+        self.respond(data.build()).await
     }
 
-    pub async fn edit(&mut self, data: InteractionResponseData) -> TwResult {
-        self.raw_respond(Some(data), InteractionResponseType::UpdateMessage)
+    pub async fn edit(&mut self, response: InteractionResponse) -> TwResult {
+        self.raw_respond(response.data, InteractionResponseType::UpdateMessage)
             .await
     }
 
     pub async fn edit_str(&mut self, response: &str, clear_comps: bool) -> TwResult {
         let mut data = self.build_resp().content(response);
         if clear_comps {
-            data = data.components([]);
+            data = data.components(Vec::<Component>::new());
         }
 
         self.edit(data.build()).await

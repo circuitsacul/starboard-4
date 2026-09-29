@@ -15,7 +15,7 @@ impl UpdateCache for MessageCreate {
             return;
         }
 
-        let message = CachedMessage::from(&self.0);
+        let message = CachedMessage::from(&self.message);
         cache
             .messages
             .insert(self.id, Some(Arc::new(message)))

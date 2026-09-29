@@ -1,5 +1,8 @@
 set dotenv-load
 
+db-client:
+    psql "$SB_DATABASE_URL"
+
 db-prepare:
     DATABASE_URL=$SB_DATABASE_URL cargo sqlx prepare
 

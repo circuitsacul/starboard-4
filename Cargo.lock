@@ -2846,8 +2846,7 @@ checksum = "e421abadd41a4225275504ea4d6566923418b7f05506fbc9c0fe86ba7396114b"
 [[package]]
 name = "twilight-gateway"
 version = "0.17.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "59267541c31f888c1587da5e7cbab182ae6efd98faedd9ea2e35a4eef43ff204"
+source = "git+https://github.com/twilight-rs/twilight.git?rev=debf45a7a7caa72b7271073ca9683ff68fc306e2#debf45a7a7caa72b7271073ca9683ff68fc306e2"
 dependencies = [
  "bitflags",
  "fastrand",
@@ -2867,8 +2866,7 @@ dependencies = [
 [[package]]
 name = "twilight-gateway-queue"
 version = "0.17.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "366a73fe47f61a3d522c3aaf70475e60634b0ae59e7b94272ed7496fffa7ceb7"
+source = "git+https://github.com/twilight-rs/twilight.git?rev=debf45a7a7caa72b7271073ca9683ff68fc306e2#debf45a7a7caa72b7271073ca9683ff68fc306e2"
 dependencies = [
  "tokio",
  "tracing",
@@ -2877,8 +2875,7 @@ dependencies = [
 [[package]]
 name = "twilight-http"
 version = "0.17.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "05b868001d7bfb953732b3f1cd92f63cb88cd2ea902f590b1d084c66aea60e48"
+source = "git+https://github.com/twilight-rs/twilight.git?rev=debf45a7a7caa72b7271073ca9683ff68fc306e2#debf45a7a7caa72b7271073ca9683ff68fc306e2"
 dependencies = [
  "brotli-decompressor",
  "fastrand",
@@ -2901,8 +2898,7 @@ dependencies = [
 [[package]]
 name = "twilight-http-ratelimiting"
 version = "0.17.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0515b0c30814068a7540fcb5f58b634259ca453fa335d42c3b2c8f2b06ac6a59"
+source = "git+https://github.com/twilight-rs/twilight.git?rev=debf45a7a7caa72b7271073ca9683ff68fc306e2#debf45a7a7caa72b7271073ca9683ff68fc306e2"
 dependencies = [
  "hashbrown 0.16.1",
  "tokio",
@@ -2934,8 +2930,7 @@ dependencies = [
 [[package]]
 name = "twilight-mention"
 version = "0.17.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b4aebfdf7f045520f52ad09d2c2cd50f138afccccbf92a2647d463d7d04e10b0"
+source = "git+https://github.com/twilight-rs/twilight.git?rev=debf45a7a7caa72b7271073ca9683ff68fc306e2#debf45a7a7caa72b7271073ca9683ff68fc306e2"
 dependencies = [
  "twilight-model",
 ]
@@ -2943,8 +2938,7 @@ dependencies = [
 [[package]]
 name = "twilight-model"
 version = "0.17.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2bf6bb7b93a7f765d89b3388cc710c0ae16104579e06bb30ea1ee6bd41420a8b"
+source = "git+https://github.com/twilight-rs/twilight.git?rev=debf45a7a7caa72b7271073ca9683ff68fc306e2#debf45a7a7caa72b7271073ca9683ff68fc306e2"
 dependencies = [
  "bitflags",
  "serde",
@@ -2956,10 +2950,9 @@ dependencies = [
 [[package]]
 name = "twilight-standby"
 version = "0.17.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f3c152f9911c2ddc9975c3919a4570e9c841a18193af74f5c8d55ad3bd7b577a"
+source = "git+https://github.com/twilight-rs/twilight.git?rev=debf45a7a7caa72b7271073ca9683ff68fc306e2#debf45a7a7caa72b7271073ca9683ff68fc306e2"
 dependencies = [
- "dashmap 6.2.1",
+ "dashmap 5.5.3",
  "futures-core",
  "tokio",
  "tracing",
@@ -2969,8 +2962,7 @@ dependencies = [
 [[package]]
 name = "twilight-util"
 version = "0.17.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e71de79d48ce27aba1f591b10c84677f1317489c2ea154d9b8ed01efa8bceb53"
+source = "git+https://github.com/twilight-rs/twilight.git?rev=debf45a7a7caa72b7271073ca9683ff68fc306e2#debf45a7a7caa72b7271073ca9683ff68fc306e2"
 dependencies = [
  "twilight-model",
  "twilight-validate",
@@ -2979,8 +2971,7 @@ dependencies = [
 [[package]]
 name = "twilight-validate"
 version = "0.17.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d6a27472e023e3841d1c4e4e20253ed796e8440aada8b5205b8544f1172e661d"
+source = "git+https://github.com/twilight-rs/twilight.git?rev=debf45a7a7caa72b7271073ca9683ff68fc306e2#debf45a7a7caa72b7271073ca9683ff68fc306e2"
 dependencies = [
  "twilight-model",
 ]

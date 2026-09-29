@@ -158,6 +158,7 @@ impl ParsedMessage {
                     ),
                     content_type: Some("video".to_string()),
                     url: proxy_url.clone(),
+                    is_spoiler: false,
                 };
                 urls.uploaded.push(handle.attachment_list_item());
                 upload_attachments.push(handle);
@@ -196,6 +197,7 @@ impl ParsedMessage {
                             filename: format!("{}.png", sticker.name),
                             content_type: Some("image/png".to_string()),
                             url: format!("https://cdn.discordapp.com/stickers/{}.png", sticker.id),
+                            is_spoiler: false,
                         };
 
                         if primary_image.is_none()
