@@ -90,7 +90,7 @@ async fn override_embed(
                 "This override belongs to the starboard '{}'.\n\n",
                 "This override applies to the following channels: {}",
             ),
-            &config.starboard.name, channels,
+            config.starboard.name, channels,
         ))
         .field(
             EmbedFieldBuilder::new("Requirements", pretty.requirements)
